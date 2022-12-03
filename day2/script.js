@@ -2,61 +2,28 @@
 const fs = require("fs");
 const data = fs.readFileSync("input-2.txt", { encoding: "utf8" });
 
-const chunks = data.trim().split(/\r?\n/);
-let rounds = chunks.map((round) => [...round].filter((item) => item !== " "));
+const rounds = data.trim().split(/\r?\n/);
 
 // PROCESSING
 const getScore = (rounds) => {
-  let sample = {
-    X: 1, //rock
-    Y: 2, //paper
-    Z: 3, //scissors
+  const points = {
+    "A X": 3,
+    "A Y": 1 + 3,
+    "A Z": 2 + 6,
+    "B X": 1,
+    "B Y": 2 + 3,
+    "B Z": 3 + 6,
+    "C X": 2,
+    "C Y": 3 + 3,
+    "C Z": 1 + 6,
   };
+  // A= 1 for Rock, B=2 for Paper, and C=3 for Scissors
+  // X = lose(0), Y = draw(3), Z = win(6).
 
-  // A > Z, B > X, C > Y, X > C, Y > A, Z > B
-  // A = X, B = Y, C = Z
-  // won = 6, lose = 0, draw = 3
-
-  const getPoints = (round) => {
-    let addNumber = 0;
-    if (round[0] === "A") {
-      if (round[1] === "Y") {
-        addNumber = 6;
-      } else if (round[1] === "X") {
-        addNumber = 3;
-      } else {
-        addNumber = 0;
-      }
-    }
-    if (round[0] === "B") {
-      if (round[1] === "Z") {
-        addNumber = 6;
-      } else if (round[1] === "Y") {
-        addNumber = 3;
-      } else {
-        addNumber = 0;
-      }
-    }
-    if (round[0] === "C") {
-      if (round[1] === "X") {
-        addNumber = 6;
-      } else if (round[1] === "Z") {
-        addNumber = 3;
-      } else {
-        addNumber = 0;
-      }
-    }
-
-    round = round.push(addNumber);
-    return round;
-  };
-
-  const countPoints = rounds.map((round) => {
-    getPoints(round);
-    return sample[round[1]] + round[2];
-  });
-
-  return countPoints.reduce((acc, n) => acc + n, 0);
+  const countPoints = rounds
+    .map((round) => points[round])
+    .reduce((acc, n) => acc + n, 0);
+  return countPoints;
 };
 
 console.log(getScore(rounds));
