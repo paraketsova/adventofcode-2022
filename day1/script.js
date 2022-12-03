@@ -9,12 +9,14 @@ const calories = chunks.map((elf) => elf.split(/\r?\n/).map((num) => +num));
 // PROCESSING
 
 const getBiggestCalories = (calories) => {
-  const elfCalories = calories.map((elf) => elf.reduce((a, b) => a + b));
+  const elfCalories = calories.map((elf) =>
+    elf.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+  );
 
   const topThreeElfCalories = elfCalories
     .sort((a, b) => b - a)
     .slice(0, 3)
-    .reduce((a, b) => a + b);
+    .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
   return topThreeElfCalories;
 };
