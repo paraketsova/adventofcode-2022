@@ -11,33 +11,31 @@ const alphabet = [..."abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"];
 // Lowercase item types a through z have priorities 1 through 26.
 // Uppercase item types A through Z have priorities 27 through 52.
 
-// PART ONE
-// const getSumPriorities = (rucksacks) => {
-//   return rucksacks.reduce((acc, ruck) => {
-//     const ruckLength = ruck.length;
-//
-//     let firstCompartment = [...ruck.slice(0, ruckLength / 2)];
-//     let secondCompartment = [...ruck.slice(ruckLength / 2, ruckLength)];
-//
-//     const commonLetter = firstCompartment.find((letter) =>
-//       secondCompartment.includes(letter)
-//     );
-//     ruckPriorities = alphabet.indexOf(commonLetter) + 1;
-//
-//     return acc + ruckPriorities;
-//   }, 0);
-// };
-//
-// console.log(getSumPriorities(rucksacks));
+// --PART ONE
+const getSumPriorities1 = (rucksacks) => {
+  return rucksacks.reduce((acc, ruck) => {
+    const ruckLength = ruck.length;
 
-// PART TWO
+    let firstCompartment = [...ruck.slice(0, ruckLength / 2)];
+    let secondCompartment = [...ruck.slice(ruckLength / 2, ruckLength)];
+
+    const commonLetter = firstCompartment.find((letter) =>
+      secondCompartment.includes(letter)
+    );
+    ruckPriorities = alphabet.indexOf(commonLetter) + 1;
+
+    return acc + ruckPriorities;
+  }, 0);
+};
+
+console.log(getSumPriorities1(rucksacks));
+
+// --PART TWO
 const getSumPriorities = (rucksacks) => {
   const groups = [];
-  const count = 3;
-  {
-    for (let s = 0, e = count; s < rucksacks.length; s += count, e += count) {
-      groups.push(rucksacks.slice(s, e));
-    }
+
+  for (let s = 0, e = 3; s < rucksacks.length; s += 3, e += 3) {
+    groups.push(rucksacks.slice(s, e));
   }
 
   return groups.reduce((acc, group) => {
