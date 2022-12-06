@@ -16,8 +16,8 @@ const pairs = data
   );
 
 // PROCESSING
-
-const findFullyContains = (pair) => {
+// Part 1
+const findFullyContains1 = (pair) => {
   if (
     (pair[0][0] >= pair[1][0] && pair[0][1] <= pair[1][1]) ||
     (pair[1][0] >= pair[0][0] && pair[1][1] <= pair[0][1])
@@ -26,9 +26,29 @@ const findFullyContains = (pair) => {
   }
 };
 
-const countFullyContainsPair = (pairs) => {
-  let result = pairs.filter((pair) => findFullyContains(pair));
+const countFullyContainsPair1 = (pairs) => {
+  let result = pairs.filter((pair) => findFullyContains1(pair));
   return result.length;
 };
 
-console.log(countFullyContainsPair(pairs));
+console.log(countFullyContainsPair1(pairs));
+
+// Part 2
+const findFullyContains2 = (pair) => {
+  if (
+    pair[0].some((num) => pair[1][0] <= num && num <= pair[1][1]) ||
+    pair[1].some((num) => pair[0][0] <= num && num <= pair[0][1])
+  ) {
+    console.log(pair);
+    console.log(pair[0]);
+    console.log(pair[1]);
+    return true;
+  }
+};
+
+const countFullyContainsPair2 = (pairs) => {
+  let result = pairs.filter((pair) => findFullyContains2(pair));
+  return result.length;
+};
+
+console.log(countFullyContainsPair2(pairs));
