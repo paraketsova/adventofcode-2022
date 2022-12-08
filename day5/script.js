@@ -7,7 +7,7 @@ const [rawStacks, rawProcedure] = data.split(/\r?\n\r?\n/);
 
 // PARSING for stacks
 const stacksPart = rawStacks.split(/\n/);
-stacksPart.pop();
+stacksPart.pop(); // delete numbers' line
 
 // create an ordered  array from stacks
 const stacks = [];
@@ -31,16 +31,31 @@ const procedures = rawProcedure
   .map((item) => [...item.match(/\d+/g)].map((num) => +num));
 
 //PROCESSING ==========================
-const getRearrangement = (procedures, stacksResult) => {
+// Part One
+// const getRearrangement1 = (procedures, stacksResult) => {
+//   procedures.forEach(([num, rowFrom, rowTo]) => {
+//     for (i = 1; i <= num; i++) {
+//       delToMove = stacksResult[rowFrom].pop();
+//       stacksResult[rowTo].push(delToMove);
+//     }
+//   });
+//
+//   stacksResult.map((stack) => stack.splice(0, stack.length - 1));
+//   return stacksResult.flat().join("");
+// };
+//
+// console.log(getRearrangement1(procedures, stacksResult));
+
+//Part Two
+const getRearrangement2 = (procedures, stacksResult) => {
   procedures.forEach(([num, rowFrom, rowTo]) => {
-    for (i = 1; i <= num; i++) {
-      delToMove = stacksResult[rowFrom].pop();
-      stacksResult[rowTo].push(delToMove);
-    }
+    const delToMove = stacksResult[rowFrom].splice(-num, num);
+
+    delToMove.forEach((letter) => stacksResult[rowTo].push(letter));
   });
 
   stacksResult.map((stack) => stack.splice(0, stack.length - 1));
   return stacksResult.flat().join("");
 };
 
-console.log(getRearrangement(procedures, stacksResult));
+console.log(getRearrangement2(procedures, stacksResult));
